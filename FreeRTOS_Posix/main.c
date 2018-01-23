@@ -181,10 +181,19 @@ static unsigned long uxQueueSendPassedCount = 0;
 static int iSerialReceive = 0;
 /*-----------------------------------------------------------*/
 
+void prvTestTask( void *param)
+{
+	static int cnt = 0;
+	while(1) {
+		printf("test task cnt = %d\n", cnt++);
+		vTaskDelay(1000);
+	}
+}
+
 int main( void )
 {
-xTaskHandle hUDPTask, hMQTask, hSerialTask;
-xQueueHandle xUDPReceiveQueue = NULL, xIPCQueue = NULL, xSerialRxQueue = NULL;
+xTaskHandle hUDPTask, hMQTask, hSerialTask, hTestTask;
+xQueueHandle xUDPReceiveQueue = NULL, xIPCQueue = NULL, xSerialRxQueue = NULL, xTestQueue = NULL;
 int iSocketReceive = 0;
 struct sockaddr_in xReceiveAddress;
 
@@ -251,6 +260,8 @@ struct sockaddr_in xReceiveAddress;
 	/* Create a Task which waits to receive bytes. */
 	xTaskCreate( prvSerialConsoleEchoTask, "SerialRx", configMINIMAL_STACK_SIZE, xSerialRxQueue, tskIDLE_PRIORITY + 4, &hSerialTask );
 
+	/* Create a test task*/
+	xTaskCreate( prvTestTask, "TestTask", configMINIMAL_STACK_SIZE, xTestQueue, tskIDLE_PRIORITY + 1, &hTestTask);
 	/* Set the scheduler running.  This function will not return unless a task calls vTaskEndScheduler(). */
 	vTaskStartScheduler();
 
