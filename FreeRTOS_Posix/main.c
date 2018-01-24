@@ -181,9 +181,25 @@ static unsigned long uxQueueSendPassedCount = 0;
 static int iSerialReceive = 0;
 /*-----------------------------------------------------------*/
 
+void testList()
+{
+	xList list;
+	xListItem item;
+	vListInitialise(&list);
+	vListInitialiseItem(&item);
+	printf("list length %d\n", listCURRENT_LIST_LENGTH(&list));
+	vListInsert(&list, &item);
+	printf("list length %d\n", listCURRENT_LIST_LENGTH(&list));
+	vListRemove(&item);
+	if(listLIST_IS_EMPTY(&list))
+		printf("list is empty\n");
+
+}
+
 void prvTestTask( void *param)
 {
 	static int cnt = 0;
+	testList();
 	while(1) {
 		printf("test task cnt = %d\n", cnt++);
 		vTaskDelay(1000);
