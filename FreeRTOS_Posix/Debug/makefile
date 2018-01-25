@@ -18,6 +18,7 @@ RM := rm -rf
 -include Common_Demo/Full/subdir.mk
 -include AsyncIO/subdir.mk
 -include objects.mk
+-include test/test.mk
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(C_DEPS)),)

@@ -124,6 +124,8 @@
 #include "AsyncIO/PosixMessageQueueIPC.h"
 #include "AsyncIO/AsyncIOSerial.h"
 
+#include "test/test.h"
+
 /* Priority definitions for the tasks in the demo application. */
 #define mainLED_TASK_PRIORITY		( tskIDLE_PRIORITY + 1 )
 #define mainCREATOR_TASK_PRIORITY	( tskIDLE_PRIORITY + 3 )
@@ -200,6 +202,7 @@ void prvTestTask( void *param)
 {
 	static int cnt = 0;
 	testList();
+	test_kernel_api();
 	while(1) {
 		printf("test task cnt = %d\n", cnt++);
 		vTaskDelay(1000);
@@ -277,7 +280,7 @@ struct sockaddr_in xReceiveAddress;
 	xTaskCreate( prvSerialConsoleEchoTask, "SerialRx", configMINIMAL_STACK_SIZE, xSerialRxQueue, tskIDLE_PRIORITY + 4, &hSerialTask );
 
 	/* Create a test task*/
-	xTaskCreate( prvTestTask, "TestTask", configMINIMAL_STACK_SIZE, xTestQueue, tskIDLE_PRIORITY + 1, &hTestTask);
+	xTaskCreate( prvTestTask, "TestTask", 4096, xTestQueue, tskIDLE_PRIORITY + 1, &hTestTask);
 	/* Set the scheduler running.  This function will not return unless a task calls vTaskEndScheduler(). */
 	vTaskStartScheduler();
 
