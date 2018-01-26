@@ -204,6 +204,7 @@ void prvTestTask( void *param)
 	testList();
 	test_kernel_api();
 	test_message_queue();
+	test_semaphore();
 	while(1) {
 		printf("test task cnt = %d\n", cnt++);
 		vTaskDelay(1000);

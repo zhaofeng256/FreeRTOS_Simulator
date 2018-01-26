@@ -3,6 +3,7 @@
 
 void test_kernel_api(void);
 void test_message_queue(void);
+void test_semaphore(void);
 
 
 #endif
