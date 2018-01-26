@@ -203,6 +203,7 @@ void prvTestTask( void *param)
 	static int cnt = 0;
 	testList();
 	test_kernel_api();
+	test_message_queue();
 	while(1) {
 		printf("test task cnt = %d\n", cnt++);
 		vTaskDelay(1000);
